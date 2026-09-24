@@ -1,0 +1,32 @@
+def shipWithinDays(self, weights: list[int], days: int) -> int:
+  lower = max(weights)
+  upper = sum(weights)
+  
+  def isPossible(max_weight: int) -> bool:
+      blocks = 1
+      total = 0
+      for w in weights:
+          if total + w > max_weight:
+              blocks += 1
+              total = 0
+              if blocks > days:
+                  return False
+          total += w
+          
+      if blocks <= days:
+          return True
+      return False
+  
+  last = None
+  while lower <= upper:
+      
+      mid = (lower + upper) // 2
+  
+      if isPossible(mid):
+          upper = mid - 1
+          last = mid
+      
+      else:
+          lower = mid + 1
+  
+  return last
